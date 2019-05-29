@@ -34,7 +34,7 @@ public class Field extends JLabel {
         setFocusable(false);
         setSize(50, 50);
 
-        ImageIcon icon = new ImageIcon("images/flag4.png");
+        ImageIcon icon = new ImageIcon("images/flag5.png");
         Image img = icon.getImage();
         Image newImg = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         flagIcon = new ImageIcon(newImg);

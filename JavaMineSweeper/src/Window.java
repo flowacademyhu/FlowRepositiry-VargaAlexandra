@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -11,36 +12,42 @@ public class Window extends JFrame implements MouseListener{
     private Field[][] fields;
     private JPanel panelBoard;
     private JPanel panelMenu;
+    private JPanel panelMenuGame;
     int factor;
     private Player player;
-    Board board;
-    boolean gameover;
+    private int numberOfFlags;
+    Board board = new Board(factor, 2, numberOfFlags);
+    JLabel gameState;
 
-    Window(int factor) throws IOException {
-        this.factor = factor;
+    Window(Board board) throws IOException {
+
+        factor= board.getFactor();
 
         jFrame=new JFrame();
         jFrame.setTitle("MineSweeper");
-        jFrame.setSize(400, 400);
+        jFrame.setSize(500, 500);
 
         jFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         panelMenu=new JPanel();
         panelBoard=new JPanel();
-        
+        panelMenuGame = new JPanel();
+
         GridLayout gridLayout = new GridLayout(factor, factor);
+        GridLayout gridLayoutForMenu = new GridLayout(2, 1);
+        GridLayout gridLayoutForMenuGame = new GridLayout(1, 3);
 
         jFrame.add(panelMenu,BorderLayout.NORTH);
         jFrame.add(panelBoard,BorderLayout.CENTER);
+        jFrame.add(panelMenuGame,BorderLayout.SOUTH);
+
         panelBoard.setLayout(gridLayout);
+        panelMenu.setLayout(gridLayoutForMenu);
+        panelMenuGame.setLayout(gridLayoutForMenuGame);
 
-        player = new Player(1);
-        panelMenu.add(player);
+        buttonSettings();
+        gameMenuSettings();
 
-        player.setOpaque(true);
-        player.setText(player.toString());
-
-        board = new Board(factor, 2, 10);
         board.buildBoardAndCountValue();
         fields = board.fields;
 
@@ -49,8 +56,94 @@ public class Window extends JFrame implements MouseListener{
         jFrame.setVisible(true);
     }
 
-    private void colorBoard() {
+    private void buttonSettings() {
+        panelBoard.setSize(400,200);
 
+        JRadioButton easy = new JRadioButton("small");
+        JRadioButton medium = new JRadioButton("medium");
+        JRadioButton hard = new JRadioButton("large");
+        panelMenu.add(easy);
+        panelMenu.add(medium);
+        panelMenu.add(hard);
+
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(easy);
+        buttonGroup.add(medium);
+        buttonGroup.add(hard);
+
+        JRadioButton smallDifficulty = new JRadioButton("easy");
+        JRadioButton mediumDifficulty = new JRadioButton("medium");
+        JRadioButton largeDifficulty = new JRadioButton("hard");
+
+        JButton jButton = new JButton("New Game");
+        panelMenu.add(jButton);
+
+        panelMenu.add(smallDifficulty);
+        panelMenu.add(mediumDifficulty);
+        panelMenu.add(largeDifficulty);
+
+        ButtonGroup buttonGroupSize = new ButtonGroup();
+        buttonGroupSize.add(easy);
+        buttonGroupSize.add(medium);
+        buttonGroupSize.add(hard);
+
+        ButtonGroup buttonGroupDifficulty = new ButtonGroup();
+        buttonGroupDifficulty.add(smallDifficulty);
+        buttonGroupDifficulty.add(mediumDifficulty);
+        buttonGroupDifficulty.add(largeDifficulty);
+
+        jButton.addActionListener((ActionEvent e) -> {
+            jFrame.dispose();
+            int size = board.getNumberOfBomb();
+            Board board = new Board(size,0, size*size/2 );
+            if (easy.isSelected()) {
+                size = 5;
+            }
+            if (medium.isSelected()) {
+                size = 10;
+            }
+            if (hard.isSelected()) {
+                size = 15;
+            }
+            if (smallDifficulty.isSelected()) {
+                board = new Board(size,size/2, 2*size );
+            }
+            if (mediumDifficulty.isSelected()) {
+                board = new Board(size,size/3, size*size/3 );
+            }
+            if (largeDifficulty.isSelected()) {
+                board = new Board(size,0, size*size/2 );
+            }
+            try {
+
+                Window window = new Window(board);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        setVisible(true);
+    }
+
+    private void gameMenuSettings() {
+        player = new Player(1);
+        panelMenuGame.add(player);
+        player.setOpaque(true);
+        player.setText(player.toString());
+
+        gameState = new JLabel("Game in progress");
+        panelMenuGame.add(gameState);
+
+        panelMenuGame.add(board);
+        numberOfFlags = board.getNumberOfFlag();
+        board.setText(board.toString());
+        board.setOpaque(true);
+        System.out.println(numberOfFlags);
+
+
+
+    }
+
+    private void colorBoard() {
 
         for (int i = 0; i < factor; i++) {
             for (int j = 0; j < factor; j++) {
@@ -79,7 +172,6 @@ public class Window extends JFrame implements MouseListener{
 
     }
 
-
     private void findEmptyFields(int valueX, int valueY) {
         int i = valueX;
         int j = valueY;
@@ -88,7 +180,7 @@ public class Window extends JFrame implements MouseListener{
             fields[i][j].setOpened(true);
             //down
             if (i + 1 < factor) {
-                if (fields[i + 1][j].getFieldValue() >= 0 && !fields[i + 1][j].isOpened()) {
+                if (fields[i + 1][j].getFieldValue() >= 0 && !fields[i + 1][j].isOpened() ) {
                     fields[i + 1][j].setOpened(true);
                     if (fields[i + 1][j].getFieldValue() == 0) {
                         findEmptyFields(i + 1, j);
@@ -99,7 +191,7 @@ public class Window extends JFrame implements MouseListener{
             if ((i + 1 < factor) && (j + 1 < factor)) {
                 if (fields[i + 1][j + 1].getFieldValue() >= 0 && !fields[i + 1][j + 1].isOpened()) {
                     fields[i + 1][j + 1].setOpened(true);
-                    if (fields[i + 1][j + 1].getFieldValue() == 0 ) {
+                    if (fields[i + 1][j + 1].getFieldValue() == 0) {
                         findEmptyFields(i + 1, j + 1);
                     }
                 }
@@ -117,16 +209,16 @@ public class Window extends JFrame implements MouseListener{
             if (j + 1 < factor) {
                 if (fields[i][j + 1].getFieldValue() >= 0 && !fields[i][j + 1].isOpened()) {
                     fields[i][j + 1].setOpened(true);
-                    if (fields[i][j + 1].getFieldValue() == 0 ) {
+                    if (fields[i][j + 1].getFieldValue() == 0) {
                         findEmptyFields(i, j + 1);
                     }
                 }
             }
 //            //left
-            if ((j - 1 >= 0) && (j - 1 < factor)) {
+            if ((j - 1 >= 0) && (j - 1 < factor) ) {
                 if (fields[i][j - 1].getFieldValue() >= 0 && !fields[i][j - 1].isOpened()) {
                     fields[i][j - 1].setOpened(true);
-                    if (fields[i][j - 1].getFieldValue() == 0 ) {
+                    if (fields[i][j - 1].getFieldValue() == 0) {
                         findEmptyFields(i, j - 1);
                     }
                 }
@@ -135,13 +227,13 @@ public class Window extends JFrame implements MouseListener{
             if ((i - 1 >= 0) && (i -1 < factor)) {
                 if (fields[i - 1][j].getFieldValue() >= 0 && !fields[i - 1][j].isOpened()) {
                     fields[i - 1][j].setOpened(true);
-                    if (fields[i - 1][j].getFieldValue() == 0 ) {
+                    if (fields[i - 1][j].getFieldValue() == 0) {
                         findEmptyFields(i - 1, j);
                     }
                 }
             }
 //            //up and left
-            if ((i - 1 >= 0) && (i -1 < factor) && (j - 1 > 0) && (j -1 < factor)) {
+            if ((i - 1 >= 0) && (i -1 < factor) && (j - 1 > 0) && (j -1 < factor) ) {
                 if (fields[i - 1][j - 1].getFieldValue() >= 0 && !fields[i - 1][j - 1].isOpened()) {
                     fields[i - 1][j - 1].setOpened(true);
                     if (fields[i - 1][j - 1].getFieldValue() == 0 ) {
@@ -154,7 +246,7 @@ public class Window extends JFrame implements MouseListener{
             if (i - 1 > 0 && i - 1 < factor && j + 1 > 0 && j + 1 < factor) {
                 if (fields[i - 1][j + 1].getFieldValue() >= 0 && !fields[i - 1][j + 1].isOpened()) {
                     fields[i - 1][j + 1].setOpened(true);
-                    if (fields[i - 1][j + 1].getFieldValue() == 0 ) {
+                    if (fields[i - 1][j + 1].getFieldValue() == 0) {
                         findEmptyFields(i - 1, j + 1);
                     }
                 }
@@ -162,92 +254,31 @@ public class Window extends JFrame implements MouseListener{
         }
     }
     public void gameOver() {
+        gameState.setText("You lost!");
         for (int i = 0; i < factor; i++) {
             for (int j = 0; j < factor; j++) {
                 fields[i][j].setOpened(true);
+                fields[i][j].removeMouseListener(this);
             }
         }
     }
-
-//    private void findEmptyFields2(int valueX, int valueY) {
-//        int i = valueX;
-//        int j = valueY;
-//
-//        if (!fields[i][j].hasFlag() && !fields[i][j].hasBomb()) {
-//            fields[i][j].setOpened(true);
-//            if (fields[i + 1][j].getFieldValue() >= 0) {
-//                fields[i + 1][j].setOpened(true);
-//            }
-//            if (i + 1 < factor) {
-//                if (fields[i + 1][j].getFieldValue() == 0) {
-//                    findEmptyFields(i + 1, j);
-//                }
-//            }
-//            //up and left
-//            if (i + 1 < factor && j + 1 < factor) {
-//                if (fields[i + 1][j + 1].getFieldValue() >= 0) {
-//                    fields[i + 1][j + 1].setOpened(true);
-//                    if (fields[i + 1][j + 1].getFieldValue() == 0) {
-//                        findEmptyFields(i + 1, j + 1);
-//                    }
-//                }
-//            }
-//            //left
-//            if (j + 1 > 0 && j + 1 < factor) {
-//                if (fields[i][j + 1].getFieldValue() >= 0) {
-//                    fields[i][j + 1].setOpened(true);
-//                    if (fields[i][j + 1].getFieldValue() == 0) {
-//                        findEmptyFields(i, j + 1);
-//                    }
-//                }
-//            }
-//            //right
-//            if (j - 1 > 0 && j - 1 < factor) {
-//                if (fields[i][j - 1].getFieldValue() >= 0) {
-//                    fields[i][j - 1].setOpened(true);
-//                    if (fields[i][j - 1].getFieldValue() == 0) {
-//                        findEmptyFields(i, j - 1);
-//                    }
-//                }
-//            }
-//            //down
-//            if (i - 1 > 0 && i -1 < factor) {
-//                if (fields[i - 1][j].getFieldValue() >= 0) {
-//                    fields[i - 1][j].setOpened(true);
-//                    if (fields[i - 1][j].getFieldValue() == 0) {
-//                        findEmptyFields(i - 1, j);
-//                    }
-//                }
-//            }
-//            //down and right
-//            if (i - 1 > 0 && i -1 < factor && j - 1 > 0 && j -1 < factor) {
-//                if (fields[i - 1][j - 1].getFieldValue() >= 0) {
-//                    fields[i - 1][j - 1].setOpened(true);
-//                    if (fields[i - 1][j - 1].getFieldValue() == 0) {
-//                        findEmptyFields(i - 1, j - 1);
-//                    }
-//                }
-//            }
-//            //down and left
-//            if (i - 1 > 0 && i -1 < factor && i + 1 > 0 && i + 1 < factor) {
-//                if (fields[i - 1][j + 1].getFieldValue() >= 0) {
-//                    fields[i - 1][j + 1].setOpened(true);
-//                    if (fields[i - 1][j + 1].getFieldValue() == 0) {
-//                        findEmptyFields(i - 1, j + 1);
-//                    }
-//                }
-//            }
-//            //up and right
-//            if (i + 1 > 0 && i -1 < factor && j - 1 > 0 && j -1 < factor) {
-//                if (fields[i + 1][j - 1].getFieldValue() >= 0) {
-//                    fields[i + 1][j - 1].setOpened(true);
-//                    if (fields[i + 1][j - 1].getFieldValue() == 0) {
-//                        findEmptyFields(i + 1, j - 1);
-//                    }
-//                }
-//            }
-////        }
-//    }
+    public void gameWin() {
+        int counter = board.getNumberOfBomb();
+        if (board.getNumberOfFlag() == board.getNumberOfBomb()) {
+            for (int i = 0; i < factor; i++) {
+                for (int j = 0; j < factor; j++) {
+                    if (fields[i][j].isOpened() && fields[i][j].hasBomb() && fields[i][j].hasFlag()) {
+                        counter--;
+                    }
+                }
+            }
+        }
+        if (counter == 0) {
+            gameState.setText("You won!");
+        } else {
+            gameState.setText("looser!");
+        }
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -256,21 +287,20 @@ public class Window extends JFrame implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-//        ImageIcon icon = new ImageIcon("images/flag5.png");
-//        Field a = ((Field) e.getSource());
-//        Image dimg = icon.getImage().getScaledInstance(a.getWidth()-3, a.getHeight()-5,
-//                Image.SCALE_SMOOTH);
-//        ImageIcon newIcon = new ImageIcon(dimg);
-
 
         if(e.getSource() instanceof Field && e.getButton() == MouseEvent.BUTTON3) {
             if (((Field) e.getSource()).getIcon() == null) {
                 ((Field) e.getSource()).setFlagged(true);
-                System.out.println("R");
+                board.setNumberOfFlag(board.getNumberOfFlag() - 1);
+                board.setText(board.toString());
+                if (board.getNumberOfFlag() == 0) {
+                    gameWin();
+                }
             } else {
                 ((Field) e.getSource()).setIcon(null);
                 ((Field) e.getSource()).setFlagged(false);
-                System.out.println("R");
+                board.setNumberOfFlag(board.getNumberOfFlag() + 1);
+                board.setText(board.toString());
             }
         }
         else if(e.getSource() instanceof Field && e.getButton() == MouseEvent.BUTTON1) {
@@ -281,24 +311,19 @@ public class Window extends JFrame implements MouseListener{
                     player.setLife(player.getLife() - 1);
                     player.setText(player.toString());
                     if (player.getLife() == 0) {
-                        System.out.println("cica");
                         gameOver();
                     }
-
                     System.out.println(Integer.valueOf(player.getLife()));
                 }
-
 
                 else if (((Field) e.getSource()).getFieldValue() > 0) {
                     ((Field) e.getSource()).setOpened(true);
                 }
-                else if (((Field) e.getSource()).getFieldValue() == 0) {
+                else if (((Field) e.getSource()).getFieldValue() == 0 ) {
                     int valueX = ((Field) e.getSource()).getCordinateX();
                     int valueY = ((Field) e.getSource()).getCordinateY();
 
                     findEmptyFields(valueY, valueX);
-
-
                 }
                 ((Field) e.getSource()).removeMouseListener(this);
                 if (((Field) e.getSource()).hasHp()) {

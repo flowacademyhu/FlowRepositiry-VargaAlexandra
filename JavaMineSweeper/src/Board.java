@@ -1,10 +1,28 @@
+import javax.swing.*;
 import java.awt.*;
 
-public class Board{
+public class Board extends JLabel {
 
     private int factor;
     private int hpFactor;
     private int numberOfBomb;
+    private int numberOfFlag;
+
+    public int getNumberOfFlag() {
+        return numberOfFlag;
+    }
+
+    public void setNumberOfFlag(int numberOfFlag) {
+        this.numberOfFlag = numberOfFlag;
+    }
+
+    public int getNumberOfBomb() {
+        return numberOfBomb;
+    }
+
+    public void setNumberOfBomb(int numberOfBomb) {
+        this.numberOfBomb = numberOfBomb;
+    }
 
     Field fields[][];
 
@@ -16,6 +34,7 @@ public class Board{
         this.hpFactor = hpFactor;
         this.numberOfBomb = numberOfBomb;
         this.fields = new Field[factor][factor];
+        this.numberOfFlag = this.numberOfBomb;
     }
 
     public void generateBoard() {
@@ -121,6 +140,9 @@ public class Board{
         }
     }
 
+    public int getFactor() {
+        return factor;
+    }
 
     public Board buildBoard(){
         this.generateBoard();
@@ -135,6 +157,9 @@ public class Board{
         return this;
     }
 
-
+    @Override
+    public String toString() {
+        return "Flags: " + numberOfFlag;
+    }
 }
 
