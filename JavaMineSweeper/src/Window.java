@@ -13,15 +13,22 @@ public class Window extends JFrame implements MouseListener{
     private JPanel panelBoard;
     private JPanel panelMenu;
     private JPanel panelMenuGame;
-    int factor;
+    private int factor;
     private Player player;
+    private int numberOfBombs;
     private int numberOfFlags;
-    Board board = new Board(factor, 2, numberOfFlags);
-    JLabel gameState;
+    private int counter;
+
+    private Board board = new Board(factor, 2, numberOfBombs, numberOfFlags );
+    private JLabel gameState;
 
     Window(Board board) throws IOException {
 
         factor= board.getFactor();
+        numberOfFlags = board.getNumberOfFlag();
+        counter = numberOfFlags;
+
+        System.out.println(numberOfFlags);
 
         jFrame=new JFrame();
         jFrame.setTitle("MineSweeper");
@@ -49,6 +56,7 @@ public class Window extends JFrame implements MouseListener{
         gameMenuSettings();
 
         board.buildBoardAndCountValue();
+        numberOfFlags = board.getNumberOfFlag();
         fields = board.fields;
 
         colorBoard();
@@ -94,8 +102,9 @@ public class Window extends JFrame implements MouseListener{
 
         jButton.addActionListener((ActionEvent e) -> {
             jFrame.dispose();
-            int size = board.getNumberOfBomb();
-            Board board = new Board(size,0, size*size/2 );
+            int size = 10;
+
+            Board board;
             if (easy.isSelected()) {
                 size = 5;
             }
@@ -106,20 +115,33 @@ public class Window extends JFrame implements MouseListener{
                 size = 15;
             }
             if (smallDifficulty.isSelected()) {
-                board = new Board(size,size/2, 2*size );
+                board = new Board(size,size/2, 2*size , 2*size);
+                try {
+
+                    Window window = new Window(board);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
             if (mediumDifficulty.isSelected()) {
-                board = new Board(size,size/3, size*size/3 );
+                board = new Board(size,size/3, size*size/3, size*size/3);
+                try {
+
+                    Window window = new Window(board);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
             if (largeDifficulty.isSelected()) {
-                board = new Board(size,0, size*size/2 );
-            }
-            try {
+                board = new Board(size,0, size*size/2 , size*size/2);
+                try {
 
-                Window window = new Window(board);
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                    Window window = new Window(board);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
+
         });
         setVisible(true);
     }
@@ -134,13 +156,8 @@ public class Window extends JFrame implements MouseListener{
         panelMenuGame.add(gameState);
 
         panelMenuGame.add(board);
-        numberOfFlags = board.getNumberOfFlag();
-        board.setText(board.toString());
+        board.setText("flags: " + numberOfFlags);
         board.setOpaque(true);
-        System.out.println(numberOfFlags);
-
-
-
     }
 
     private void colorBoard() {
@@ -151,21 +168,50 @@ public class Window extends JFrame implements MouseListener{
                 fields[i][j].setOpaque(true);
                 if (i % 2 == 0) {
                     if (j % 2 == 0) {
-                        fields[i][j].setBackground(new java.awt.Color(50, 205, 50));
+                        fields[i][j].setBackground(new java.awt.Color(169, 169, 169));
 
                     } else {
-                        fields[i][j].setBackground(new java.awt.Color(0, 128, 0));
+                        fields[i][j].setBackground(new java.awt.Color(128, 128, 128));
                     }
                 } else {
                     if (j % 2 != 0) {
-                        fields[i][j].setBackground(new java.awt.Color(50, 205, 50));
+                        fields[i][j].setBackground(new java.awt.Color(169, 169, 169));
                     } else {
-                        fields[i][j].setBackground(new java.awt.Color(0, 128, 0));
+                        fields[i][j].setBackground(new java.awt.Color(128, 128, 128));
                     }
 
                 }
                 fields[i][j].setBorder(new LineBorder(Color.darkGray));
                 fields[i][j].addMouseListener(this);
+            }
+
+        }
+
+    }
+    private void colorOpenBoard() {
+
+        for (int i = 0; i < factor; i++) {
+            for (int j = 0; j < factor; j++) {
+                fields[i][j].setOpaque(true);
+                if ( fields[i][j].isOpened()) {
+                    if (i % 2 == 0) {
+                        if (j % 2 == 0) {
+                            fields[i][j].setBackground(new java.awt.Color(220, 220, 220));
+
+                        } else {
+                            fields[i][j].setBackground(new java.awt.Color(211, 211, 211));
+                        }
+                    } else {
+                        if (j % 2 != 0) {
+                            fields[i][j].setBackground(new java.awt.Color(220, 220, 220));
+                        } else {
+                            fields[i][j].setBackground(new java.awt.Color(211, 211, 211));
+                        }
+
+                    }
+                }
+
+                fields[i][j].setBorder(new LineBorder(Color.darkGray));
             }
 
         }
@@ -258,25 +304,20 @@ public class Window extends JFrame implements MouseListener{
         for (int i = 0; i < factor; i++) {
             for (int j = 0; j < factor; j++) {
                 fields[i][j].setOpened(true);
-                fields[i][j].removeMouseListener(this);
+                colorOpenBoard();
             }
         }
     }
     public void gameWin() {
-        int counter = board.getNumberOfBomb();
-        if (board.getNumberOfFlag() == board.getNumberOfBomb()) {
-            for (int i = 0; i < factor; i++) {
-                for (int j = 0; j < factor; j++) {
-                    if (fields[i][j].isOpened() && fields[i][j].hasBomb() && fields[i][j].hasFlag()) {
-                        counter--;
+        for (int i = 0; i < factor; i++) {
+            for (int j = 0; j < factor; j++) {
+                if (!fields[i][j].isOpened()) {
+                    if (fields[i][j].hasBomb() && fields[i][j].hasFlag()) {
+                        gameState.setText("You won");
                     }
                 }
+
             }
-        }
-        if (counter == 0) {
-            gameState.setText("You won!");
-        } else {
-            gameState.setText("looser!");
         }
     }
 
@@ -289,18 +330,32 @@ public class Window extends JFrame implements MouseListener{
     public void mousePressed(MouseEvent e) {
 
         if(e.getSource() instanceof Field && e.getButton() == MouseEvent.BUTTON3) {
-            if (((Field) e.getSource()).getIcon() == null) {
-                ((Field) e.getSource()).setFlagged(true);
-                board.setNumberOfFlag(board.getNumberOfFlag() - 1);
-                board.setText(board.toString());
-                if (board.getNumberOfFlag() == 0) {
-                    gameWin();
+            if( numberOfFlags > 0) {
+                if (((Field) e.getSource()).getIcon() == null) {
+                    ((Field) e.getSource()).setFlagged(true);
+                    numberOfFlags--;
+                    counter--;
+                    board.setText("flags: " + numberOfFlags);
+                    if (counter == 0) {
+                        gameWin();
+                    }
                 }
-            } else {
+                else {
+                    ((Field) e.getSource()).setIcon(null);
+                    ((Field) e.getSource()).setFlagged(false);
+                    numberOfFlags++;
+                    counter++;
+                    board.setText("flags: " + numberOfFlags);
+                }
+            }
+            else if( numberOfFlags == 0 && ((Field) e.getSource()).hasFlag() ) {
                 ((Field) e.getSource()).setIcon(null);
                 ((Field) e.getSource()).setFlagged(false);
-                board.setNumberOfFlag(board.getNumberOfFlag() + 1);
-                board.setText(board.toString());
+                numberOfFlags++;
+                board.setText("flags: " + numberOfFlags);
+            }
+            else {
+                gameState.setText("Out of flags");
             }
         }
         else if(e.getSource() instanceof Field && e.getButton() == MouseEvent.BUTTON1) {
@@ -309,43 +364,55 @@ public class Window extends JFrame implements MouseListener{
                 if ( ((Field) e.getSource()).hasBomb()) {
                     ((Field) e.getSource()).setOpened(true);
                     player.setLife(player.getLife() - 1);
+                    counter--;
                     player.setText(player.toString());
+                    colorOpenBoard();
+
+
                     if (player.getLife() == 0) {
                         gameOver();
                     }
-                    System.out.println(Integer.valueOf(player.getLife()));
                 }
 
                 else if (((Field) e.getSource()).getFieldValue() > 0) {
                     ((Field) e.getSource()).setOpened(true);
+                    colorOpenBoard();
+
                 }
                 else if (((Field) e.getSource()).getFieldValue() == 0 ) {
                     int valueX = ((Field) e.getSource()).getCordinateX();
                     int valueY = ((Field) e.getSource()).getCordinateY();
 
                     findEmptyFields(valueY, valueX);
+                    colorOpenBoard();
+
                 }
                 ((Field) e.getSource()).removeMouseListener(this);
                 if (((Field) e.getSource()).hasHp()) {
+                    colorOpenBoard();
                     ((Field) e.getSource()).addMouseListener(this);
+
                 }
 
             }
              else if ( ((Field) e.getSource()).hasHp() && !((Field) e.getSource()).isOpened()) {
                 ((Field) e.getSource()).setOpened(true);
+                colorOpenBoard();
+
 
             } else if (((Field) e.getSource()).isOpened() && ((Field) e.getSource()).hasHp()) {
                 ((Field) e.getSource()).setIcon(null);
                 ((Field) e.getSource()).setText(""+ ((Field) e.getSource()).getFieldValue());
                 player.setLife(player.getLife() + 1);
                 player.setText(player.toString());
-                System.out.println(Integer.valueOf(player.getLife()));
                 if (((Field) e.getSource()).getFieldValue() == 0) {
                     int valueX = ((Field) e.getSource()).getCordinateX();
                     int valueY = ((Field) e.getSource()).getCordinateY();
 
                     findEmptyFields(valueY, valueX);
                     ((Field) e.getSource()).setIcon(null);
+                    colorOpenBoard();
+
 
                 }
                 ((Field) e.getSource()).removeMouseListener(this);

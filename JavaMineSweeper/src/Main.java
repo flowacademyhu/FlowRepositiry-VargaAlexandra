@@ -2,11 +2,10 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        int hard = 15;
-        Board boardHard = new Board(hard,0, hard*hard );
+        Board boardStart = new Board(10,1, 10 , 10);
 
         try {
-            Window frame = new Window(boardHard);
+            Window frame = new Window(boardStart);
         } catch (IOException e) {
             e.printStackTrace();
         }

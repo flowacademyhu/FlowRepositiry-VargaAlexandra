@@ -29,12 +29,13 @@ public class Board extends JLabel {
     int i= 0;
     int j = 0;
 
-    public Board(int factor, int hpFactor, int numberOfBomb) {
+    public Board(int factor, int hpFactor, int numberOfBomb, int numberOfFlag) {
         this.factor = factor;
         this.hpFactor = hpFactor;
         this.numberOfBomb = numberOfBomb;
+        this.numberOfFlag = numberOfFlag;
+
         this.fields = new Field[factor][factor];
-        this.numberOfFlag = this.numberOfBomb;
     }
 
     public void generateBoard() {
@@ -63,7 +64,7 @@ public class Board extends JLabel {
     }
 
     public void generateBombFieldsOnBoard() {
-        int numberOfBombs = 2 * factor;
+        int numberOfBombs = this.numberOfBomb;
         while(numberOfBombs > 0 ) {
             int j = (int) (Math.random() * factor);
             int i = (int) (Math.random() * factor);
@@ -77,8 +78,8 @@ public class Board extends JLabel {
     public void generateHpFieldsOnBoard() {
         int numberOfHpFactor = hpFactor;
         while(numberOfHpFactor > 0 ) {
-            int j = (int) (Math.random() * 5);
-            int i = (int) (Math.random() * 5);
+            int j = (int) (Math.random() * factor);
+            int i = (int) (Math.random() * factor);
             if ( !fields[i][j].hasHp() && !fields[i][j].hasBomb()) {
                 fields[i][j].setHp(true);
                 numberOfHpFactor--;
@@ -159,7 +160,8 @@ public class Board extends JLabel {
 
     @Override
     public String toString() {
-        return "Flags: " + numberOfFlag;
+        return
+                "Flags: " + numberOfFlag;
     }
 }
 
