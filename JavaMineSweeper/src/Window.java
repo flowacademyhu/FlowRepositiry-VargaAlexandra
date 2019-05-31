@@ -18,6 +18,9 @@ public class Window extends JFrame implements MouseListener{
     private int numberOfBombs;
     private int numberOfFlags;
     private int counter;
+    private boolean gameWin = false;
+    int startNumberOfFlags;
+    int didYouWinCounter = 0;
 
     private Board board = new Board(factor, 2, numberOfBombs, numberOfFlags );
     private JLabel gameState;
@@ -26,7 +29,9 @@ public class Window extends JFrame implements MouseListener{
 
         factor= board.getFactor();
         numberOfFlags = board.getNumberOfFlag();
+
         counter = numberOfFlags;
+        startNumberOfFlags = numberOfFlags;
 
         System.out.println(numberOfFlags);
 
@@ -103,6 +108,17 @@ public class Window extends JFrame implements MouseListener{
         jButton.addActionListener((ActionEvent e) -> {
             jFrame.dispose();
             int size = 10;
+
+            if ( (!easy.isSelected() && !medium.isSelected() && !hard.isSelected()) || (!smallDifficulty.isSelected() && !mediumDifficulty.isSelected() && !largeDifficulty.isSelected())) {
+                Board boardStart = new Board(10,1, 10 , 10);
+
+                try {
+                    Window frame = new Window(boardStart);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
 
             Board board;
             if (easy.isSelected()) {
@@ -210,6 +226,10 @@ public class Window extends JFrame implements MouseListener{
 
                     }
                 }
+                if( !fields[i][j].hasHp() && fields[i][j].isOpened()) {
+                    fields[i][j].removeMouseListener(this);
+
+                }
 
                 fields[i][j].setBorder(new LineBorder(Color.darkGray));
             }
@@ -307,19 +327,25 @@ public class Window extends JFrame implements MouseListener{
                 colorOpenBoard();
             }
         }
+        JOptionPane.showMessageDialog(panelBoard, "You lost!");
     }
     public void gameWin() {
         for (int i = 0; i < factor; i++) {
             for (int j = 0; j < factor; j++) {
                 if (!fields[i][j].isOpened()) {
                     if (fields[i][j].hasBomb() && fields[i][j].hasFlag()) {
-                        gameState.setText("You won");
+                        didYouWinCounter++;
                     }
                 }
-
             }
         }
+        if (didYouWinCounter == (startNumberOfFlags -counter)) {
+            gameState.setText("You won!");
+            JOptionPane.showMessageDialog(panelBoard, "You won!");
+        }
+
     }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -336,6 +362,7 @@ public class Window extends JFrame implements MouseListener{
                     numberOfFlags--;
                     counter--;
                     board.setText("flags: " + numberOfFlags);
+                    gameState.setText("Game in progress");
                     if (counter == 0) {
                         gameWin();
                     }
@@ -343,6 +370,7 @@ public class Window extends JFrame implements MouseListener{
                 else {
                     ((Field) e.getSource()).setIcon(null);
                     ((Field) e.getSource()).setFlagged(false);
+                    gameState.setText("Game in progress");
                     numberOfFlags++;
                     counter++;
                     board.setText("flags: " + numberOfFlags);
@@ -351,6 +379,7 @@ public class Window extends JFrame implements MouseListener{
             else if( numberOfFlags == 0 && ((Field) e.getSource()).hasFlag() ) {
                 ((Field) e.getSource()).setIcon(null);
                 ((Field) e.getSource()).setFlagged(false);
+                gameState.setText("Game in progress");
                 numberOfFlags++;
                 board.setText("flags: " + numberOfFlags);
             }
@@ -364,7 +393,9 @@ public class Window extends JFrame implements MouseListener{
                 if ( ((Field) e.getSource()).hasBomb()) {
                     ((Field) e.getSource()).setOpened(true);
                     player.setLife(player.getLife() - 1);
+                    didYouWinCounter++;
                     counter--;
+
                     player.setText(player.toString());
                     colorOpenBoard();
 

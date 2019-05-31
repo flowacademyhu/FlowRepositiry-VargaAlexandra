@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b65a08ae-dc0b-4673-a740-3ba3e50d4f08" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/test/WindowTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../threadmanaging/threadmanaging.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaMineSweeper/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaMineSweeper/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/JavaMineSweeper/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaMineSweeper/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaMineSweeper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/JavaMineSweeper.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/JavaMineSweeper/Window.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/JavaMineSweeper/Window.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Window.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../carsharing/src/main/java/hu/flowacademy/carsharing/controller/CarController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../carsharing/src/main/java/hu/flowacademy/carsharing/controller/DriverController.java" beforeDir="false" />
@@ -51,14 +50,14 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.1402715">
+    <splitter split-orientation="horizontal" split-proportion="0.13833158">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Main.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="60">
-                  <caret line="4" column="40" lean-forward="true" selection-start-line="4" selection-end-line="5" />
+                  <caret line="4" column="40" selection-start-line="4" selection-end-line="5" />
                 </state>
               </provider>
             </entry>
@@ -102,10 +101,10 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/Board.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="405">
+                <state relative-caret-position="159">
                   <caret line="36" selection-start-line="36" selection-end-line="36" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -123,8 +122,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Window.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="172">
-                  <caret line="319" column="13" selection-start-line="319" selection-start-column="13" selection-end-line="319" selection-end-column="13" />
+                <state relative-caret-position="605">
+                  <caret line="367" selection-start-line="367" selection-end-line="367" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -135,12 +134,12 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/Window.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1414">
-                  <caret line="28" column="32" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+                <state relative-caret-position="203">
+                  <caret line="327" column="68" selection-start-line="327" selection-start-column="68" selection-end-line="327" selection-end-column="68" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -164,6 +163,7 @@
       <find>random</find>
       <find>Syste</find>
       <find>num</find>
+      <find>gameWi</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -183,6 +183,7 @@
         <option value="$PROJECT_DIR$/src/Field.java" />
         <option value="$PROJECT_DIR$/src/Board.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/test/WindowTest.java" />
         <option value="$PROJECT_DIR$/src/Window.java" />
       </list>
     </option>
@@ -193,20 +194,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-        <option value="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-        <option value="$PROJECT_DIR$/../threadmanaging/threadmanaging.iml" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="122" />
-    <option name="y" value="61" />
-    <option name="width" value="1161" />
-    <option name="height" value="662" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="77" />
+    <option name="y" value="47" />
+    <option name="width" value="1141" />
+    <option name="height" value="636" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -214,6 +206,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -231,27 +225,35 @@
               <item name="JavaMineSweeper" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="JavaMineSweeper" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JavaMineSweeper" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Letöltések/Java-Minesweeper-Game" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/images" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/images" />
       <recent name="$PROJECT_DIR$/src" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$/images" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -266,7 +268,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.MineSweeper">
     <configuration name="MineSweeper" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="JavaMineSweeper" />
@@ -274,6 +276,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="WindowTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="JavaMineSweeper" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="WindowTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.WindowTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -288,6 +304,29 @@
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="WindowTest - 2019.05.31 at 10h 43m 13s.xml">
+      <configuration name="WindowTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="WindowTest - 2019.05.31 at 10h 43m 53s.xml">
+      <configuration name="WindowTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="WindowTest - 2019.05.31 at 10h 45m 32s.xml">
+      <configuration name="WindowTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="WindowTest - 2019.05.31 at 10h 46m 03s.xml">
+      <configuration name="WindowTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="WindowTest - 2019.05.31 at 11h 06m 32s.xml">
+      <configuration name="WindowTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="WindowTest - 2019.05.31 at 11h 07m 00s.xml">
+      <configuration name="WindowTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="WindowTest - 2019.05.31 at 11h 07m 36s.xml">
+      <configuration name="WindowTest" configurationId="JUnit" />
+    </history-entry>
+  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -298,10 +337,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1366" y="-2" width="1920" height="1082" extended-state="6" />
+    <frame x="67" y="25" width="1299" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.06296691" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2442139" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -310,7 +349,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32948583" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31374606" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.509772" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39576548" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -319,6 +358,7 @@
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.3257329" />
+      <window_info anchor="right" id="Coverage" side_tool="true" weight="0.32960895" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -356,6 +396,9 @@
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout-to-restore>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/JavaMineSweeper$WindowTest.ic" NAME="WindowTest Coverage Results" MODIFIED="1559293651368" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="editorHistoryManager">
     <entry file="jar:///usr/lib/jvm/zulu-11-amd64/lib/src.zip!/java.base/java/lang/Math.java">
@@ -501,9 +544,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="40" selection-start-line="4" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/WindowTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="6" lean-forward="true" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
+        <state relative-caret-position="159">
           <caret line="36" selection-start-line="36" selection-end-line="36" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -517,17 +577,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="40" lean-forward="true" selection-start-line="4" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Window.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1414">
-          <caret line="28" column="32" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+        <state relative-caret-position="203">
+          <caret line="327" column="68" selection-start-line="327" selection-start-column="68" selection-end-line="327" selection-end-column="68" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
